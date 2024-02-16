@@ -7,6 +7,7 @@ import SearchAitools from "./Components/SearchAitools";
 import SearchReleqaitools from "./Components/SearchReleqaitool";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
+import { DarkModeProvider } from "./Context/DarkContext";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -40,7 +41,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <DarkModeProvider>
+        <RouterProvider router={router} />
+      </DarkModeProvider>
     </>
   );
 }

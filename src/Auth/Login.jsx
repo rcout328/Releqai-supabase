@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { Link } from "react-router-dom";
+import DarkContext from "../Context/DarkContext";
 
 const Login = () => {
   const [loginemail, setLoginEmail] = useState("");
   const [loginpassword, setLoginPassword] = useState("");
   const [error, setError] = useState("");
+  const [darks] = useContext(DarkContext);
+
   const supabase = createClient(
     "https://fruwyrldqkxmnrojtobb.supabase.co",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZydXd5cmxkcWt4bW5yb2p0b2JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc4NTgzNDgsImV4cCI6MTk5MzQzNDM0OH0.0D74FcgHeOl8-hZOOC2qbCGD6pOWMv1YedOpFayiqsU"
@@ -31,21 +34,32 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <h1 className="font-bold mt-10 text-3xl">Login</h1>
+    <div
+      className={`flex flex-col justify-center items-center ${
+        darks ? "bg-whtie " : "bg-black "
+      } h-screen`}
+    >
+      <h1
+        className={`font-bold mt-10 text-3xl ${
+          darks ? "text-black " : "text-white "
+        }`}
+      >
+        Login
+      </h1>
+
       <input
         type="text"
         value={loginemail}
         onChange={(e) => setLoginEmail(e.target.value)}
         placeholder="Enter your Email"
-        className="border border-black px-5 py-5 mt-10"
+        className="border px-5 py-5 mt-10 dark:border-white"
       />
       <input
         type="password"
         value={loginpassword}
         onChange={(e) => setLoginPassword(e.target.value)}
         placeholder="Enter your Password"
-        className="border border-black px-5 py-5 mt-10"
+        className="border px-5 py-5 mt-10 dark:border-white"
       />
       <Link to="/">
         <button

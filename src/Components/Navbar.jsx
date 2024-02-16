@@ -1,9 +1,24 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import DarkContext from "../Context/DarkContext";
 const Navbar = () => {
+  const [darks, setDarks] = useContext(DarkContext);
+
+  const toggle = () => {
+    setDarks(!darks);
+  };
   return (
-    <div className="flex flex-row">
+    <div
+      className={`flex flex-row ${
+        darks ? "bg-white text-black" : "bg-black text-white"
+      }`}
+    >
       <Link to="/">
-        <div className="flex w-20 h-10 bg-black text-white justify-center items-center ml-5 mt-5">
+        <div
+          className={`flex w-20 h-10 ${
+            darks ? "bg-black text-white" : "bg-white text-black"
+          } justify-center items-center ml-5 mt-5`}
+        >
           Releqai
         </div>
       </Link>
@@ -26,6 +41,9 @@ const Navbar = () => {
             <Link to="/searchreleqai">Search Releqai</Link>
           </li>
         </ul>
+        <button onClick={toggle} className="pl-5">
+          {darks ? "Light" : "Dark"}
+        </button>
       </div>
     </div>
   );
