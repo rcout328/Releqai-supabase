@@ -8,6 +8,8 @@ import SearchReleqaitools from "./Components/SearchReleqaitool";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
 import { DarkModeProvider } from "./Context/DarkContext";
+import Contactform from "./Components/Contactform";
+import ContactFormReactHookForm from "./Components/ContactForm1";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/contact",
+    element: <Contactform />,
+  },
+  {
+    path: "/contact1",
+    element: <ContactFormReactHookForm />,
   },
 ]);
 function App() {

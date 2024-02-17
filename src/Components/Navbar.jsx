@@ -40,6 +40,12 @@ const Navbar = () => {
           <li>
             <Link to="/searchreleqai">Search Releqai</Link>
           </li>
+          <li>
+            <Link to="/contact">Contact</Link>
+          </li>
+          <li>
+            <Link to="/contact1">Contact1</Link>
+          </li>
         </ul>
         <button onClick={toggle} className="pl-5">
           {darks ? "Light" : "Dark"}
