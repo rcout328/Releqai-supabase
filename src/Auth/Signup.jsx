@@ -69,7 +69,7 @@ const Signup = () => {
             onChange={(e) => setsignupEmail(e.target.value)}
             placeholder="Enter your Email"
             className={`border px-5 py-5 mt-10 ${
-              darks ? "border-white" : "border-black"
+              darks ? "border-gray-300" : "border-black"
             }`}
           />
           <input
@@ -78,7 +78,7 @@ const Signup = () => {
             onChange={(e) => setsignupPassword(e.target.value)}
             placeholder="Enter your Password"
             className={`border px-5 py-5 mt-10 ${
-              darks ? "border-white" : "border-black"
+              darks ? "border-gray-300" : "border-black"
             }`}
           />
           <Link to="/">

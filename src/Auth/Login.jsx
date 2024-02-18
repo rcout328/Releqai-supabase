@@ -64,14 +64,14 @@ const Login = () => {
             value={loginemail}
             onChange={(e) => setLoginEmail(e.target.value)}
             placeholder="Enter your Email"
-            className="border px-5 py-5 mt-10 dark:border-white"
+            className="border px-5 py-5 mt-10 dark:border-gray-300"
           />
           <input
             type="password"
             value={loginpassword}
             onChange={(e) => setLoginPassword(e.target.value)}
             placeholder="Enter your Password"
-            className="border px-5 py-5 mt-10 dark:border-white"
+            className="border px-5 py-5 mt-10 dark:border-gray-300"
           />
           <Link to="/">
             <button

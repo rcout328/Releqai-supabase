@@ -54,43 +54,47 @@ const Navbar = () => {
       </Link>
 
       <div className="flex mt-7 absolute top-0 right-0 mr-10">
-        <ul className="flex flex-row space-x-5">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/aitool">Ai tool</Link>
-          </li>
-          <li>
-            <Link to="/releqai">Releq Ai</Link>
-          </li>
-          <li>
-            <Link to="/searchai">Search ai</Link>
-          </li>
-          <li>
-            <Link to="/searchreleqai">Search Releqai</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact</Link>
-          </li>
-          <li>
-            <Link to="/contact1">Contact1</Link>
-          </li>
-        </ul>
-        <button onClick={toggle} className="pl-5">
-          {darks ? "Light" : "Dark"}
-        </button>
         {!sessions ? (
           <>
+            <button onClick={toggle} className="pl-5">
+              {darks ? "Light" : "Dark"}
+            </button>
             <Link to="/login" className="ml-5">
               Login
             </Link>
+
             <Link to="/signup" className="ml-5">
               Signup
             </Link>
           </>
         ) : (
           <>
+            <ul className="flex flex-row space-x-5">
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/aitool">Ai tool</Link>
+              </li>
+              <li>
+                <Link to="/releqai">Releq Ai</Link>
+              </li>
+              <li>
+                <Link to="/searchai">Search ai</Link>
+              </li>
+              <li>
+                <Link to="/searchreleqai">Search Releqai</Link>
+              </li>
+              <li>
+                <Link to="/contact">Contact</Link>
+              </li>
+              <li>
+                <Link to="/contact1">Contact1</Link>
+              </li>
+            </ul>
+            <button onClick={toggle} className="pl-5">
+              {darks ? "Light" : "Dark"}
+            </button>
             <button onClick={signOut} className="ml-5">
               Signout
             </button>

@@ -1,19 +1,11 @@
-import { useForm } from "react-hook-form";
-import Navbar from "./Navbar";
-import { useContext, useReducer } from "react";
-import DarkContext from "../Context/DarkContext";
+import { useState, useEffect } from "react";
 import supabase from "./Supabase";
-import reducer from "./Reducer";
 import useSupabaseAuth from "./useSession";
-export default function ContactForm1() {
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
-  const { session } = useSupabaseAuth();
-  const [darks] = useContext(DarkContext);
-  function handleInput(e) {
-    dispatch({ type: e.target.name, payload: e.target.value });
-  }
+import { LoginContext } from "../Context/Logincon";
+import { useContext } from "react";
+import Navbar from "./Navbar";
 
+const ContactForm1 = () => {
   const initialState = {
     name: "",
     email: "",
@@ -21,66 +13,80 @@ export default function ContactForm1() {
     message: "",
   };
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [darks] = useContext(LoginContext);
+  const { session } = useSupabaseAuth();
 
-  async function handleadd() {
+  const getStorageValue = (key, defaultValue) => {
+    const saved = localStorage.getItem(key);
+    const initial = JSON.parse(saved);
+    return initial || defaultValue;
+  };
+
+  const [state, setState] = useState(() =>
+    getStorageValue("formState", initialState)
+  );
+
+  useEffect(() => {
+    localStorage.setItem("formState", JSON.stringify(state));
+  }, [state]);
+
+  const handleInput = (e) => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
+
+  const handleAdd = async () => {
     try {
       const { error } = await supabase.from("contact").insert([state]);
       if (error) throw error;
       console.log("Data added successfully");
-      dispatch({ type: "name", payload: "" });
-      dispatch({ type: "email", payload: "" });
-      dispatch({ type: "phoneno", payload: "" });
-      dispatch({ type: "message", payload: "" });
+      setState(initialState);
     } catch (error) {
       console.error("Error adding data:", error.message);
     }
-  }
+  };
+
   return (
     <>
       <Navbar />
       {session ? (
         <div
-          className={`flex flex-col justify-center items-center h-screen ${
+          className={`flex flex-col items-center ${
             darks ? "bg-white" : "bg-black"
           }`}
         >
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="max-w-md w-full mt-10 h-full"
-          >
+          <form className="max-w-md w-full mt-10 h-full">
             <input
-              {...register("name")}
               placeholder="Enter your Name"
+              name="name"
               value={state.name}
               onChange={handleInput}
               className="mt-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
             />
             <input
-              {...register("email")}
               placeholder="Enter your Email"
+              name="email"
               value={state.email}
               onChange={handleInput}
               className="mt-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
             />
             <input
-              {...register("phoneno")}
+              placeholder="Enter your Phone Number"
+              name="phoneno"
               value={state.phoneno}
               onChange={handleInput}
-              placeholder="Enter your Phone Number"
               className="mt-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
             />
             <textarea
-              {...register("message")}
+              placeholder="Enter your Message"
+              name="message"
               value={state.message}
               onChange={handleInput}
-              placeholder="Enter your Message"
               className="mt-4 p-2 border border-gray-300 rounded-md w-full resize-none focus:outline-none focus:border-blue-500"
             />
             <button
-              type="submit"
+              type="button"
               className="mt-6 bg-blue-700 text-white p-2 rounded-full w-full focus:outline-none hover:bg-blue-600"
-              onClick={handleadd}
+              onClick={handleAdd}
             >
               Submit
             </button>
@@ -91,4 +97,6 @@ export default function ContactForm1() {
       )}
     </>
   );
-}
+};
+
+export default ContactForm1;

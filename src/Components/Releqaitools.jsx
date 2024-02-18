@@ -80,7 +80,11 @@ const ReleqAitools = () => {
               {datas.map((item) => (
                 <li
                   key={item.id}
-                  className="bg-whites p-4 rounded-lg shadow-md"
+                  className={`bg-whites p-4 rounded-lg shadow-md ${
+                    darks
+                      ? ""
+                      : "border border-white hover:bg-white hover:text-blue-700"
+                  }`}
                 >
                   <h2 className="text-xl font-semibold mb-2">
                     {item.aitoolname}
