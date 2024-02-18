@@ -1,16 +1,13 @@
 import { useState, useEffect, useContext } from "react";
-import { createClient } from "@supabase/supabase-js";
 import Navbar from "./Navbar";
 import DarkContext from "../Context/DarkContext";
+
+import supabase from "./Supabase";
 
 const SearchReleqaitools = () => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [darks] = useContext(DarkContext);
-  const supabase = createClient(
-    "https://fruwyrldqkxmnrojtobb.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZydXd5cmxkcWt4bW5yb2p0b2JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc4NTgzNDgsImV4cCI6MTk5MzQzNDM0OH0.0D74FcgHeOl8-hZOOC2qbCGD6pOWMv1YedOpFayiqsU"
-  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +28,7 @@ const SearchReleqaitools = () => {
     };
 
     fetchData();
-  }, [search, supabase]);
+  }, [search]);
 
   return (
     <>

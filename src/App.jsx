@@ -10,6 +10,7 @@ import Signup from "./Auth/Signup";
 import { DarkModeProvider } from "./Context/DarkContext";
 import Contactform from "./Components/Contactform";
 import ContactFormReactHookForm from "./Components/ContactForm1";
+import Logincon from "./Context/Logincon";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,9 +52,11 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <DarkModeProvider>
-        <RouterProvider router={router} />
-      </DarkModeProvider>
+      <Logincon>
+        <DarkModeProvider>
+          <RouterProvider router={router} />
+        </DarkModeProvider>
+      </Logincon>
     </>
   );
 }

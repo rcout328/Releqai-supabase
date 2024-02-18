@@ -1,12 +1,42 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import DarkContext from "../Context/DarkContext";
+import supabase from "./Supabase";
+import { LoginContext } from "../Context/Logincon";
 const Navbar = () => {
   const [darks, setDarks] = useContext(DarkContext);
-
+  // eslint-disable-next-line no-unused-vars
+  const [sessions, setSession] = useContext(LoginContext);
   const toggle = () => {
     setDarks(!darks);
   };
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const signOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error("Sign-out error:", error.message);
+      } else {
+        console.log("User signed out successfully");
+        // You can redirect to a different page or perform other actions as needed
+      }
+    } catch (error) {
+      console.error("Unexpected error during sign-out:", error.message);
+    }
+  };
+
   return (
     <div
       className={`flex flex-row ${
@@ -50,6 +80,22 @@ const Navbar = () => {
         <button onClick={toggle} className="pl-5">
           {darks ? "Light" : "Dark"}
         </button>
+        {!sessions ? (
+          <>
+            <Link to="/login" className="ml-5">
+              Login
+            </Link>
+            <Link to="/signup" className="ml-5">
+              Signup
+            </Link>
+          </>
+        ) : (
+          <>
+            <button onClick={signOut} className="ml-5">
+              Signout
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
