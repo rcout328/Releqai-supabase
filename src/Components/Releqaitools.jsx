@@ -3,20 +3,29 @@ import Navbar from "./Navbar";
 import DarkContext from "../Context/DarkContext";
 import { LoginContext } from "../Context/Logincon";
 import supabase from "./Supabase";
+import Releqaicat1 from "./Arrays/Releqcat";
+
 const ReleqAitools = () => {
   const [datas, setData] = useState([]);
   const [darks] = useContext(DarkContext);
-  const [session, setSession] = useContext(LoginContext); // Assuming LoginContext is imported from somewhere
+  const [session, setSession] = useContext(LoginContext);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   async function getData() {
     try {
-      const { data, error } = await supabase.from("releqaitool").select("*");
+      let query = supabase.from("releqaitool").select("*");
+
+      if (selectedCategory) {
+        query = query.filter("catid", "eq", selectedCategory);
+      }
+
+      const { data, error } = await query;
+
       if (error) {
         throw error;
       }
+
       setData(data);
-      console.log(datas);
-      console.log(data);
     } catch (err) {
       console.error(err);
     }
@@ -47,11 +56,11 @@ const ReleqAitools = () => {
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [setSession]);
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [selectedCategory]);
 
   return (
     <>
@@ -74,9 +83,23 @@ const ReleqAitools = () => {
             >
               AI Tools
             </h1>
-            <ul
-              className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 `}
-            >
+            <div className="mb-4">
+              <h1 className="text-xl font-bold">Releqai Categories</h1>
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                placeholder="All Categories"
+                className="text-black border border-black"
+              >
+                <option value="">All Categories</option>
+                {Releqaicat1.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {datas.map((item) => (
                 <li
                   key={item.id}

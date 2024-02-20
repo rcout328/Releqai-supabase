@@ -4,20 +4,29 @@ import { useContext } from "react";
 import DarkContext from "../Context/DarkContext";
 import useSupabaseAuth from "./useSession";
 import supabase from "./Supabase";
+import categoriesArray from "./Arrays/Array";
+
 const Aitools = () => {
   const [datas, setData] = useState([]);
   const [darks] = useContext(DarkContext);
-
+  const [selectedCategory, setSelectedCategory] = useState("");
   const { session } = useSupabaseAuth();
 
   async function getData() {
     try {
-      const { data, error } = await supabase.from("aitool").select("*");
+      let query = supabase.from("aitool").select("*");
+
+      if (selectedCategory) {
+        query = query.filter("Cat_id", "eq", selectedCategory);
+      }
+
+      const { data, error } = await query;
+
       if (error) {
         throw error;
       }
+
       setData(data);
-      console.log(data);
     } catch (err) {
       console.error(err);
     }
@@ -25,7 +34,7 @@ const Aitools = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [selectedCategory]); // Fetch data whenever the selected category changes
 
   return (
     <>
@@ -48,6 +57,21 @@ const Aitools = () => {
             >
               AI Tools
             </h1>
+            <div className="mb-4">
+              <label className="text-sm font-semibold">Select Category:</label>
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="text-black border border-black"
+              >
+                <option value="">All Categories</option>
+                {categoriesArray.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
             <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {datas.map((item) => (
                 <li key={item.id} className="bg-white p-4 rounded-lg shadow-md">

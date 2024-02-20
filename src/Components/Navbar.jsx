@@ -1,12 +1,14 @@
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
 import DarkContext from "../Context/DarkContext";
 import supabase from "./Supabase";
 import { LoginContext } from "../Context/Logincon";
+
 const Navbar = () => {
   const [darks, setDarks] = useContext(DarkContext);
-  // eslint-disable-next-line no-unused-vars
   const [sessions, setSession] = useContext(LoginContext);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const toggle = () => {
     setDarks(!darks);
   };
@@ -38,70 +40,271 @@ const Navbar = () => {
   };
 
   return (
-    <div
-      className={`flex flex-row ${
-        darks ? "bg-white text-black" : "bg-black text-white"
-      }`}
+    <nav
+      className={`bg-${darks ? "white" : "black"} text-${
+        darks ? "black" : "white"
+      } py-4`}
     >
-      <Link to="/">
+      <div className="container mx-auto flex justify-between items-center px-4 md:px-0">
+        {/* Logo Square Box */}
         <div
-          className={`flex w-20 h-10 ${
-            darks ? "bg-black text-white" : "bg-white text-black"
-          } justify-center items-center ml-5 mt-5`}
+          className={`w-12 h-12 rounded-full bg-${
+            darks ? "black" : "white"
+          } flex items-center justify-center`}
         >
-          Releqai
+          <Link to="/">
+            <div
+              className={`text-xl font-semibold ${
+                darks ? "text-white" : "text-black"
+              }`}
+            >
+              YL
+            </div>
+          </Link>
         </div>
-      </Link>
 
-      <div className="flex mt-7 absolute top-0 right-0 mr-10">
-        {!sessions ? (
-          <>
-            <button onClick={toggle} className="pl-5">
-              {darks ? "Light" : "Dark"}
-            </button>
-            <Link to="/login" className="ml-5">
-              Login
-            </Link>
-
-            <Link to="/signup" className="ml-5">
-              Signup
-            </Link>
-          </>
-        ) : (
-          <>
+        {sessions ? (
+          <div className="hidden md:flex space-x-6">
             <ul className="flex flex-row space-x-5">
               <li>
-                <Link to="/">Home</Link>
+                <Link
+                  to="/"
+                  className={`hover:${darks ? "text-gray-400" : "text-white"}`}
+                >
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to="/aitool">Ai tool</Link>
+                <Link
+                  to="/aitool"
+                  className={`hover:${darks ? "text-gray-400" : "text-white"}`}
+                >
+                  Ai tool
+                </Link>
               </li>
               <li>
-                <Link to="/releqai">Releq Ai</Link>
+                <Link
+                  to="/releqai"
+                  className={`hover:${darks ? "text-gray-400" : "text-white"}`}
+                >
+                  Releq Ai
+                </Link>
               </li>
               <li>
-                <Link to="/searchai">Search ai</Link>
+                <Link
+                  to="/searchai"
+                  className={`hover:${darks ? "text-gray-400" : "text-white"}`}
+                >
+                  Search ai
+                </Link>
               </li>
               <li>
-                <Link to="/searchreleqai">Search Releqai</Link>
+                <Link
+                  to="/searchreleqai"
+                  className={`hover:${darks ? "text-gray-400" : "text-white"}`}
+                >
+                  Search Releqai
+                </Link>
               </li>
               <li>
-                <Link to="/contact">Contact</Link>
+                <Link
+                  to="/contact"
+                  className={`hover:${darks ? "text-gray-400" : "text-white"}`}
+                >
+                  Contact
+                </Link>
               </li>
               <li>
-                <Link to="/contact1">Contact1</Link>
+                <Link
+                  to="/contact1"
+                  className={`hover:${darks ? "text-gray-400" : "text-white"}`}
+                >
+                  Contact1
+                </Link>
               </li>
             </ul>
-            <button onClick={toggle} className="pl-5">
+            <button
+              onClick={toggle}
+              className={`hover:${darks ? "text-gray-400" : "text-white"} `}
+            >
               {darks ? "Light" : "Dark"}
             </button>
-            <button onClick={signOut} className="ml-5">
+            <button
+              onClick={signOut}
+              className={`hover:${darks ? "text-gray-400" : "text-white"} ml-5`}
+            >
               Signout
             </button>
-          </>
+          </div>
+        ) : (
+          <button></button>
+        )}
+
+        <div className="md:hidden flex items-center">
+          <button
+            className={`text-xl ${
+              darks ? "text-black" : "text-white"
+            } focus:outline-none`}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? "Close" : "Menu"}
+          </button>
+        </div>
+
+        {sessions ? (
+          <div className="md:flex items-center space-x-4"></div>
+        ) : (
+          <div className="hidden md:flex space-x-4 md:flex-col">
+            <Link
+              to="/login"
+              className={`hover:${darks ? "text-gray-400" : "text-white"}`}
+            >
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className={`hover:${darks ? "text-gray-400" : "text-white"}`}
+            >
+              Signup
+            </Link>
+          </div>
         )}
       </div>
-    </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden absolute top-16 left-0 w-full bg-gray-900 border-t border-gray-700">
+          {sessions ? (
+            <>
+              <ul
+                className={`text-center py-4 ${
+                  darks ? "text-white" : "text-white"
+                } `}
+              >
+                <li>
+                  <Link
+                    to="/"
+                    className={`block py-3 hover:${
+                      darks ? "text-white" : "text-white"
+                    }`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/aitool"
+                    className={`block py-3 hover:${
+                      darks ? "text-gray-400" : "text-white"
+                    }`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Ai tool
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/releqai"
+                    className={`block py-3 hover:${
+                      darks ? "text-gray-400" : "text-white"
+                    }`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Releq Ai
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/searchai"
+                    className={`block py-3 hover:${
+                      darks ? "text-gray-400" : "text-white"
+                    }`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Search ai
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/searchreleqai"
+                    className={`block py-3 hover:${
+                      darks ? "text-gray-400" : "text-white"
+                    }`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Search Releqai
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/contact"
+                    className={`block py-3 hover:${
+                      darks ? "text-gray-400" : "text-white"
+                    }`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Contact
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/contact1"
+                    className={`block py-3 hover:${
+                      darks ? "text-gray-400" : "text-white"
+                    }`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Contact1
+                  </Link>
+                </li>
+                <li
+                  className={`block py-3 hover:${
+                    darks ? "text-gray-400" : "text-white"
+                  }`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <button onClick={toggle}>{darks ? "Light" : "Dark"}</button>
+                </li>
+                <li
+                  className={`block py-3 hover:${
+                    darks ? "text-gray-400" : "text-white"
+                  }`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <button onClick={signOut}>Signout</button>
+                </li>
+              </ul>
+            </>
+          ) : (
+            <div className="flex flex-col">
+              <button>
+                <Link
+                  to="/login"
+                  className={`block py-3 hover:${
+                    darks ? "text-gray-400" : "text-white"
+                  }`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Login
+                </Link>
+              </button>
+              <button>
+                <Link
+                  to="/signup"
+                  className={`block py-3 hover:${
+                    darks ? "text-gray-400" : "text-white"
+                  }`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Signup
+                </Link>
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </nav>
   );
 };
 
