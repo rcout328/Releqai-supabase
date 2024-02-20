@@ -23,6 +23,7 @@ const Navbar = () => {
       setSession(session);
     });
     return () => subscription.unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const signOut = async () => {
@@ -45,20 +46,16 @@ const Navbar = () => {
         darks ? "black" : "white"
       } py-4`}
     >
-      <div className="container mx-auto flex justify-between items-center px-4 md:px-0">
+      <div className="container mx-auto flex ml-5 justify-between items-center px-4 md:px-0">
         {/* Logo Square Box */}
-        <div
-          className={`w-12 h-12 rounded-full bg-${
-            darks ? "black" : "white"
-          } flex items-center justify-center`}
-        >
+        <div className={`w-20 h-20  flex items-center justify-center`}>
           <Link to="/">
             <div
-              className={`text-xl font-semibold ${
-                darks ? "text-white" : "text-black"
+              className={`text-xl font-semibold w-20 h-10 flex justify-center items-center ${
+                darks ? "text-white bg-black" : "text-black bg-white"
               }`}
             >
-              YL
+              Logo
             </div>
           </Link>
         </div>
