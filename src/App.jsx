@@ -11,6 +11,7 @@ import { DarkModeProvider } from "./Context/DarkContext";
 import Contactform from "./Components/Contactform";
 import ContactFormReactHookForm from "./Components/ContactForm1";
 import Logincon from "./Context/Logincon";
+import Chat from "./Components/Chat";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: "/contact1",
     element: <ContactFormReactHookForm />,
+  },
+  {
+    path: "/chat",
+    element: <Chat />,
   },
 ]);
 function App() {
