@@ -37,6 +37,7 @@ const Part1 = () => {
 
   useEffect(() => {
     getData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategory]); // Fetch data whenever the selected category changes
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { useContext } from "react";
@@ -39,6 +40,7 @@ const Home = () => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleInserts = (payload) => {
     console.log("Change received!", payload);
     // Update the UI in real-time
@@ -61,7 +63,7 @@ const Home = () => {
         URL.revokeObjectURL(image);
       }
     };
-  }, [image]);
+  }, [handleInserts, image]);
 
   const handleAdd = async () => {
     try {
@@ -118,6 +120,7 @@ const Home = () => {
   useEffect(() => {
     handleShow();
     handleuser();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

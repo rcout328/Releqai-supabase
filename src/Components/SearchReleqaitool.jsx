@@ -31,6 +31,7 @@ const SearchReleqaitools = () => {
     };
 
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, supabase]);
 
   useEffect(() => {

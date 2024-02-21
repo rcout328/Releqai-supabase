@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import promptsArray from "./Arrays/Prompts";
 
 const Part3 = () => {
